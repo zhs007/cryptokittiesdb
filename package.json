@@ -1,7 +1,8 @@
 {
-  "name": "cryptokittiesimg",
+  "name": "cryptokittiesdb",
   "version": "0.0.1",
   "dependencies": {
+    "async": "^2.6.0",
     "crawlercore": "^1.2.26",
     "jarvis-task": "^1.1.8",
     "node-expat": "^2.3.16",
