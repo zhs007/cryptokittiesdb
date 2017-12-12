@@ -4,6 +4,7 @@
   "dependencies": {
     "crawlercore": "^1.2.26",
     "jarvis-task": "^1.1.8",
+    "node-expat": "^2.3.16",
     "yargs": "^10.0.3"
   }
 }
