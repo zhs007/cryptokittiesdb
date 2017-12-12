@@ -1,9 +1,16 @@
 "use strict";
 
 const { Task } = require('jarvis-task');
-const { CrawlerMgr } = require('crawlercore');
+const { CrawlerMgr, HeadlessChromeMgr } = require('crawlercore');
 const { TaskFactory_CK } = require('./taskfactory');
 const { TASK_NAMEID_INIT } = require('./taskdef');
+
+const HEADLESSCHROME_NAME = 'hc';
+const HEADLESSCHROME_OPTION = {
+    port: 9222,
+    autoSelectChrome: true,
+    additionalFlags: ['--window-size=1136,640', '--disable-gpu', '--headless']
+};
 
 class TaskInit extends Task {
     constructor(cfg) {
@@ -15,6 +22,8 @@ class TaskInit extends Task {
     onStart() {
         super.onStart();
 
+        HeadlessChromeMgr.singleton.addHeadlessChrome(HEADLESSCHROME_NAME, HEADLESSCHROME_OPTION);
+
         for (let dbcfgname in this.cfg.mysqlcfg) {
             CrawlerMgr.singleton.addMysqlCfg(dbcfgname, this.cfg.mysqlcfg[dbcfgname]);
         }
@@ -24,7 +33,9 @@ class TaskInit extends Task {
         }
 
         CrawlerMgr.singleton.init().then(() => {
-            this.onEnd();
+            HeadlessChromeMgr.singleton.getHeadlessChrome(HEADLESSCHROME_NAME).then(() => {
+                this.onEnd();
+            });
         });
     }
 };

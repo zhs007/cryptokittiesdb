@@ -23,12 +23,12 @@ class TaskInitKitty extends Task {
         DBMgr.singleton.loadAttrib().then(() => {
 
             let arr = [];
-            for (let ii = 1; ii < 10000; ++ii) {
+            for (let ii = 1; ii < 100; ++ii) {
                 arr.push(ii);
             }
 
             async.eachSeries(arr, (val, next) => {
-                startKittyCrawler(val, async (crawler) => {}).then(() => {
+                startKittyCrawler('hc', val, async (crawler) => {}).then(() => {
                     next();
                 });
             }, (err) => {
