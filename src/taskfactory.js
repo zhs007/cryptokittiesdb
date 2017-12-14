@@ -1,11 +1,13 @@
 "use strict";
 
-const { TaskFactory } = require('jarvis-task');
+const { TaskFactory, regTaskFactory_InitCrawlerMgr } = require('jarvis-task');
 const { TASKFACTORY_NAMEID_CRYPTOKITTIES } = require('./taskdef');
 
 class TaskFactory_CK extends TaskFactory {
     constructor() {
         super(TASKFACTORY_NAMEID_CRYPTOKITTIES);
+
+        regTaskFactory_InitCrawlerMgr(this);
     }
 };
 

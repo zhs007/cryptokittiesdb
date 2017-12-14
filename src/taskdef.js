@@ -3,9 +3,9 @@
 const TASKFACTORY_NAMEID_CRYPTOKITTIES      = 'cryptokitties';
 
 const TASK_NAMEID_INITKITTY                 = 'initkitty';
-const TASK_NAMEID_INIT                      = 'init';
+const TASK_NAMEID_INITKITTYIMG              = 'initkittyimg';
 
 exports.TASKFACTORY_NAMEID_CRYPTOKITTIES    = TASKFACTORY_NAMEID_CRYPTOKITTIES;
 
 exports.TASK_NAMEID_INITKITTY               = TASK_NAMEID_INITKITTY;
-exports.TASK_NAMEID_INIT                    = TASK_NAMEID_INIT;
+exports.TASK_NAMEID_INITKITTYIMG            = TASK_NAMEID_INITKITTYIMG;

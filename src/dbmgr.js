@@ -53,7 +53,9 @@ class DBMgr {
             this.mapAttribType[atttype] = {};
         }
 
-        this.mapAttribType[atttype][attval] = indb;
+        if (!this.mapAttribType[atttype].hasOwnProperty(attval)) {
+            this.mapAttribType[atttype][attval] = indb;
+        }
     }
 };
 

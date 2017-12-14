@@ -4,13 +4,13 @@ const { Task } = require('jarvis-task');
 const async = require('async');
 const { CrawlerMgr } = require('crawlercore');
 const { TaskFactory_CK } = require('../taskfactory');
-const { TASK_NAMEID_INITKITTY } = require('../taskdef');
+const { TASK_NAMEID_INITKITTYIMG } = require('../taskdef');
 const { DBMgr } = require('../dbmgr');
-const { startKittyCrawler } = require('./kitty');
+const { startKittyImgCrawler } = require('./img');
 
-class TaskInitKitty extends Task {
+class TaskInitKittyImg extends Task {
     constructor(cfg) {
-        super(TASK_NAMEID_INITKITTY);
+        super(TASK_NAMEID_INITKITTYIMG);
 
         this.cfg = cfg;
     }
@@ -28,12 +28,12 @@ class TaskInitKitty extends Task {
             }
 
             async.eachSeries(arr, (val, next) => {
-                startKittyCrawler(this.cfg.headlesschrome_name, val, async (crawler) => {}).then(() => {
+                startKittyImgCrawler(val, async (crawler) => {}).then(() => {
                     next();
                 });
             }, (err) => {
                 CrawlerMgr.singleton.start(true, false, async () => {
-                    await DBMgr.singleton.saveAttrib();
+                    // await DBMgr.singleton.saveAttrib();
 
                     this.onEnd();
                 }, true);
@@ -42,8 +42,8 @@ class TaskInitKitty extends Task {
     }
 };
 
-TaskFactory_CK.singleton.regTask(TASK_NAMEID_INITKITTY, (cfg) => {
-    return new TaskInitKitty(cfg);
+TaskFactory_CK.singleton.regTask(TASK_NAMEID_INITKITTYIMG, (cfg) => {
+    return new TaskInitKittyImg(cfg);
 });
 
-exports.TaskInitKitty = TaskInitKitty;
+exports.TaskInitKittyImg = TaskInitKittyImg;

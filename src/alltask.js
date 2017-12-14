@@ -1,4 +1,4 @@
 "use strict";
 
-require('./task_init');
 require('./cryptokitties/task_initkitty');
+require('./cryptokitties/task_initkittyimg');
