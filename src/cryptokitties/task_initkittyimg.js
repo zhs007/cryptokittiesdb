@@ -23,7 +23,7 @@ class TaskInitKittyImg extends Task {
         DBMgr.singleton.loadAttrib().then(() => {
 
             let arr = [];
-            for (let ii = 6000; ii <= 10000; ++ii) {
+            for (let ii = 30000; ii <= 33000; ++ii) {
                 arr.push(ii);
             }
 

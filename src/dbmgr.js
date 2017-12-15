@@ -8,6 +8,7 @@ const SQL_BATCH_NUMS = 2048;
 class DBMgr {
     constructor() {
         this.mapAttribType = {};
+        this.mapImg = {};
 
         this.mysqlid = undefined;
     }
@@ -73,7 +74,7 @@ class DBMgr {
     async insImgAttr(hashkey, idname, info) {
         let conn = CrawlerMgr.singleton.getMysqlConn(this.mysqlid);
 
-        await conn.beginTransaction();
+        // await conn.beginTransaction();
         let str = util.format("select * from imgattr where hashkey = '%s' and idname = '%s'", hashkey, idname);
         let [rows, fields] = await conn.query(str);
         if (rows.length > 0) {
@@ -91,6 +92,38 @@ class DBMgr {
 
         // await conn.commit();
     }
+
+    async loadImgAttr() {
+        this.mapImg = {};
+
+        let conn = CrawlerMgr.singleton.getMysqlConn(this.mysqlid);
+
+        let str = util.format("select * from imgattr");
+        let [rows, fields] = await conn.query(str);
+        for (let i = 0; i < rows.length; ++i) {
+            this.addImgAttr(rows[i].hashkey, rows[i].info, rows[i].idname, true);
+        }
+    }
+
+    addImgAttr(hashkey, info, idname, indb) {
+        if (!this.mapImg.hasOwnProperty(idname)) {
+            this.mapImg[idname] = {};
+        }
+
+        if (this.mapImg[idname].hasOwnProperty(hashkey)) {
+            return false;
+        }
+
+        this.mapImg[idname][hashkey] = {
+            idname: idname,
+            haskkey: hashkey,
+            info: info,
+            indb: indb
+        };
+
+        return true;
+    }
+
 };
 
 DBMgr.singleton = new DBMgr();

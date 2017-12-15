@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "async": "^2.6.0",
-    "jarvis-task": "^1.1.16",
+    "jarvis-task": "^1.1.17",
     "node-expat": "^2.3.16",
     "yargs": "^10.0.3"
   }
