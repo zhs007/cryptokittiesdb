@@ -28,7 +28,7 @@ class TaskInitKittyImg extends Task {
             }
 
             async.eachSeries(arr, (val, next) => {
-                startKittyImgCrawler(val, async (crawler) => {}).then(() => {
+                startKittyImgCrawler(this.cfg.headlesschrome_name, val, async (crawler) => {}).then(() => {
                     next();
                 });
             }, (err) => {

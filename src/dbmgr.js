@@ -57,6 +57,40 @@ class DBMgr {
             this.mapAttribType[atttype][attval] = indb;
         }
     }
+
+    // async hasImgAttr(hashkey, idname) {
+    //     let conn = CrawlerMgr.singleton.getMysqlConn(this.mysqlid);
+    //
+    //     let str = util.format("select * from imgattr where hashkey = '%s' and idname = '%s'", hashkey, idname);
+    //     let [rows, fields] = await conn.query(str);
+    //     if (rows.length > 0) {
+    //         return true;
+    //     }
+    //
+    //     return false;
+    // }
+
+    async insImgAttr(hashkey, idname, info) {
+        let conn = CrawlerMgr.singleton.getMysqlConn(this.mysqlid);
+
+        await conn.beginTransaction();
+        let str = util.format("select * from imgattr where hashkey = '%s' and idname = '%s'", hashkey, idname);
+        let [rows, fields] = await conn.query(str);
+        if (rows.length > 0) {
+            return ;
+        }
+
+        let sql = util.format("insert into imgattr(hashkey, info, idname) values('%s', '%s', '%s')", hashkey, info, idname);
+        try{
+            await conn.query(sql);
+        }
+        catch(err) {
+            console.log('mysql err: ' + err);
+            console.log('mysql sql: ' + sql);
+        }
+
+        // await conn.commit();
+    }
 };
 
 DBMgr.singleton = new DBMgr();
