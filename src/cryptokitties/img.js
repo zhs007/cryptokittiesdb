@@ -11,6 +11,11 @@ const OPTIONS_TYPENAME = 'cryptokitties_kittyimg';
 // 分析数据
 async function func_analysis(crawler) {
 
+    let body = undefined;
+    let bodyfur = undefined;
+    let tail = undefined;
+    let tailfur = undefined;
+
     for (let ii = 0; ii < crawler.da.root._lstchild.length; ++ii) {
         let gobj = crawler.da.root._lstchild[ii];
         if (gobj._attr.hasOwnProperty('id')) {
@@ -18,11 +23,32 @@ async function func_analysis(crawler) {
             let cinfo = toXMLString(gobj);
             let hashkey = hash_md5(cinfo);
 
+            if (idname == 'tail') {
+                tail = hashkey;
+            }
+            else if (idname == 'tailFur') {
+                tailfur = hashkey;
+            }
+            else if (idname == 'body') {
+                body = hashkey;
+            }
+            else if (idname == 'bodyFur') {
+                bodyfur = hashkey;
+            }
+
             // let isnoins = await DBMgr.singleton.hasImgAttr(hashkey, idname);
             // if (!isnoins) {
             await DBMgr.singleton.insImgAttr(hashkey, idname, cinfo);
             // }
         }
+    }
+
+    if (tail != undefined && tailfur != undefined) {
+        await DBMgr.singleton.insTailImg(tail, tailfur);
+    }
+
+    if (body != undefined && bodyfur != undefined) {
+        await DBMgr.singleton.insBodyImg(body, bodyfur);
     }
 
     HeadlessChromeMgr.singleton.closeTab(crawler.client);
